@@ -3,6 +3,8 @@ import 'package:cinemapedia/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../providers/movies/movies_slide_show_provider.dart';
+
 class HomeScreen extends StatelessWidget {
   static const name = "HomeScreen";
 
@@ -12,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: _HomeView(),
+      bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }
@@ -33,23 +36,61 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final moviesSlideShow = ref.watch(moviesSlideShowProvider);
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
-    return Column(
-      children: [
-        const CustomAppBar(),
 
-        MovieSlideShow(movies: nowPlayingMovies)
-        /*Expanded(
-          child: ListView.builder(
-              itemCount: nowPlayingMovies.length,
-              itemBuilder: (context, index) {
-                final movie = nowPlayingMovies[index];
-                return ListTile(
-                  title: Text(movie.title),
-                );
-              }),
-        )*/
-      ],
+    return CustomScrollView(
+      slivers: [
+        const SliverAppBar(
+          floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            titlePadding: EdgeInsets.zero,
+            centerTitle: false,
+            title: CustomAppBar(),
+          ),
+        ),
+
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            return Column(
+            children: [
+              MovieSlideShow(movies: moviesSlideShow),
+          
+              MovieHorizontalListView(
+                movies: nowPlayingMovies,
+                title: 'En cines',
+                subTitle: 'Lunes 20',
+                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()
+              ),
+          
+              MovieHorizontalListView(
+                movies: nowPlayingMovies,
+                title: 'Próximamente',
+                subTitle: 'En este mes',
+                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()
+              ),
+          
+              MovieHorizontalListView(
+                movies: nowPlayingMovies,
+                title: 'Populares',
+                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()
+              ),
+          
+              MovieHorizontalListView(
+                movies: nowPlayingMovies,
+                title: 'Mejor calificadas',
+                subTitle: 'Desde siempre',
+                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()
+              ),
+
+              const SizedBox(height: 10)
+            ],
+          );
+          },
+          childCount: 1),
+        )
+      ]
+      
     );
   }
 }
