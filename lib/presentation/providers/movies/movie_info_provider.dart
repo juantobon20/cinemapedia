@@ -25,7 +25,6 @@ class MovieMapNotifier extends StateNotifier<Map<String,Movie>> {
       return;
     }
 
-    print('Realizando petición http');
     final movie = await getMovieCallback(movieId);
 
     state = { ...state, movieId: movie};
