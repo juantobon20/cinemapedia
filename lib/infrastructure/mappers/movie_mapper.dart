@@ -1,4 +1,5 @@
 import 'package:cinemapedia/domain/entities/movie.dart';
+import 'package:cinemapedia/infrastructure/models/moviedb/movie_details.dart';
 import 'package:cinemapedia/infrastructure/models/moviedb/movie_moviedb.dart';
 
 class MovieMapper {
@@ -20,6 +21,25 @@ class MovieMapper {
       voteAverage: movieDb.voteAverage,
       voteCount: movieDb.voteCount
   );
+
+  static Movie movieDetailToEntity(MovieDetails movieDetails) => Movie(
+     adult: movieDetails.adult,
+      backdropPath: (movieDetails.backdropPath != '') ? "$_imageURL${movieDetails.backdropPath}" 
+        : _imageNotFound,
+      genreIds: movieDetails.genres.map((e) => e.name).toList(),
+      id: movieDetails.id,
+      originalLanguage: movieDetails.originalLanguage,
+        originalTitle: movieDetails.originalTitle,
+        overview: movieDetails.overview,
+      popularity: movieDetails.popularity,
+      posterPath: (movieDetails.posterPath != '') ? '$_imageURL${movieDetails.posterPath}'
+        : _imageNotFound,
+      releaseDate: movieDetails.releaseDate,
+      title: movieDetails.title,
+      video: movieDetails.video,
+      voteAverage: movieDetails.voteAverage,
+      voteCount: movieDetails.voteCount
+    );
 }
 
 const _imageURL = 'https://image.tmdb.org/t/p/w500';
