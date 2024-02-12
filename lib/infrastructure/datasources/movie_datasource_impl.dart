@@ -73,6 +73,18 @@ class MovieDatasoruceImpl extends MovieDatasoruce {
     return MovieMapper.movieDetailToEntity(movieDetails);
   }
 
+  @override
+  Future<List<Movie>> searchMovies(String query, {int page = 1}) async {
+     final response = await dio.get('search/movie',
+      queryParameters: {
+        'query' : query,
+        'page' : page
+      }
+    );
+
+    return _jsonToMovies(response.data);
+  }
+
   List<Movie> _jsonToMovies(Map<String, dynamic> json) {
     final movieDbResponse = MovieDbResponse.fromJson(json);
     final List<Movie> movies = movieDbResponse.results
