@@ -25,12 +25,15 @@ class CustomAppBar extends ConsumerWidget {
               Text('Cinemapedia', style: titleStyle),
               const Spacer(),
               IconButton(onPressed: () {
-                final movieRepository = ref.read(movieRepositoryProvider);
+                final searchedMovies = ref.read(searchedMoviesProvider);
+                final searchQuery = ref.read(searchQueryMovieProvider);
 
                 showSearch<String?>(
                   context: context, 
+                  query: searchQuery,
                   delegate: SearchMovieDelegate(
-                    searchMovieCallback: movieRepository.searchMovies,
+                    initialMovies: searchedMovies,
+                    searchMovieCallback: ref.read(searchedMoviesProvider.notifier).searchMoviesByQuery
                   )
                 ).then((movieId) {
                   if (movieId != null) {
