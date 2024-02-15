@@ -60,8 +60,8 @@ class _CustomSliverAppBar extends ConsumerWidget {
     return SliverAppBar(
       actions: [
         IconButton(
-          onPressed: () {
-            ref.watch(localStorageRepositoryProvider).toggleFavorite(movie);
+          onPressed: () async {
+            await ref.read(favoriteMoviesProvider.notifier).toggleFavorite(movie);
 
             ref.invalidate(isFavoriteMovieProvider(movie.id));
           }, 
@@ -205,7 +205,7 @@ class _ActorsByMovie extends ConsumerWidget {
     final actors = actorsByMovie[movieId]!;
 
     return SizedBox(
-      height: 300,
+      height: 310,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: actorsByMovie.length,

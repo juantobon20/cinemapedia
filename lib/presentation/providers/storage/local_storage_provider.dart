@@ -17,22 +17,22 @@ final isFavoriteMovieProvider = FutureProvider.family.autoDispose((ref, int movi
 
 final favoriteMoviesProvider = StateNotifierProvider<FavoriteMoviesNotifier, Map<int, Movie>>((ref) {
   final LocalStorageRepository localStorageRepository = ref.watch(localStorageRepositoryProvider);
-  return FavoriteMoviesNotifier(favoriteMoviesCallback: localStorageRepository.loadMovies);
+  return FavoriteMoviesNotifier(localStorageRepository: localStorageRepository);
 });
 
-typedef FavoriteMoviesCallback = Future<List<Movie>> Function({int offset});
+typedef FavoriteMoviesCallback = Future<List<Movie>> Function({int offset, int limit});
 
 class FavoriteMoviesNotifier extends StateNotifier<Map<int,Movie>> {
 
   int page = 0;
-  FavoriteMoviesCallback favoriteMoviesCallback;
+  LocalStorageRepository localStorageRepository;
 
   FavoriteMoviesNotifier({
-    required this.favoriteMoviesCallback
+    required this.localStorageRepository
   }): super({});
 
-  Future<void> loadNextPage() async {
-    final List<Movie> movies = await favoriteMoviesCallback(offset: page * 10);
+  Future<List<Movie>> loadNextPage() async {
+    final List<Movie> movies = await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
     page++;
 
     final tempMoviesMap = <int, Movie>{};
@@ -41,5 +41,20 @@ class FavoriteMoviesNotifier extends StateNotifier<Map<int,Movie>> {
     }
 
     state = { ...state, ...tempMoviesMap};
+
+    return movies;
+  }
+
+  Future<void> toggleFavorite(Movie movie) async {
+    await localStorageRepository.toggleFavorite(movie);
+
+    final bool isMovieInFavorite = state[movie.id] != null;
+
+    if (isMovieInFavorite) {
+      state.remove(movie.id);
+      state = { ...state };
+    } else {
+      state = { ...state, movie.id: movie };
+    }
   }
 }
