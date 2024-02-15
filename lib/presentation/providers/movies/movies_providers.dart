@@ -34,6 +34,11 @@ final topRatedMoviesProvider = StateNotifierProvider<MovieNotifier, List<Movie>>
   );
 });
 
+final similarMoviesProvider = FutureProvider.family((ref, int movieId) {
+  final movieRepository = ref.watch(movieRepositoryProvider);
+  return movieRepository.getSimilarMovies(movieId);
+});
+
 typedef MovieCallback = Future<List<Movie>> Function({int page});
 
 class MovieNotifier extends StateNotifier<List<Movie>> {

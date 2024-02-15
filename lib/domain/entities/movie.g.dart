@@ -162,7 +162,7 @@ Movie _movieDeserialize(
     overview: reader.readString(offsets[6]),
     popularity: reader.readDouble(offsets[7]),
     posterPath: reader.readString(offsets[8]),
-    releaseDate: reader.readDateTimeOrNull(offsets[9]),
+    releaseDate: reader.readDateTime(offsets[9]),
     title: reader.readString(offsets[10]),
     video: reader.readBool(offsets[11]),
     voteAverage: reader.readDouble(offsets[12]),
@@ -198,7 +198,7 @@ P _movieDeserializeProp<P>(
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 10:
       return (reader.readString(offset)) as P;
     case 11:
@@ -1289,24 +1289,8 @@ extension MovieQueryFilter on QueryBuilder<Movie, Movie, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Movie, Movie, QAfterFilterCondition> releaseDateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'releaseDate',
-      ));
-    });
-  }
-
-  QueryBuilder<Movie, Movie, QAfterFilterCondition> releaseDateIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'releaseDate',
-      ));
-    });
-  }
-
   QueryBuilder<Movie, Movie, QAfterFilterCondition> releaseDateEqualTo(
-      DateTime? value) {
+      DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'releaseDate',
@@ -1316,7 +1300,7 @@ extension MovieQueryFilter on QueryBuilder<Movie, Movie, QFilterCondition> {
   }
 
   QueryBuilder<Movie, Movie, QAfterFilterCondition> releaseDateGreaterThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1329,7 +1313,7 @@ extension MovieQueryFilter on QueryBuilder<Movie, Movie, QFilterCondition> {
   }
 
   QueryBuilder<Movie, Movie, QAfterFilterCondition> releaseDateLessThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1342,8 +1326,8 @@ extension MovieQueryFilter on QueryBuilder<Movie, Movie, QFilterCondition> {
   }
 
   QueryBuilder<Movie, Movie, QAfterFilterCondition> releaseDateBetween(
-    DateTime? lower,
-    DateTime? upper, {
+    DateTime lower,
+    DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -2150,7 +2134,7 @@ extension MovieQueryProperty on QueryBuilder<Movie, Movie, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Movie, DateTime?, QQueryOperations> releaseDateProperty() {
+  QueryBuilder<Movie, DateTime, QQueryOperations> releaseDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'releaseDate');
     });

@@ -15,7 +15,7 @@ class MovieMapper {
       popularity: movieDb.popularity,
       posterPath: (movieDb.posterPath != '') ? '$_imageURL${movieDb.posterPath}'
         : _imageNotFound,
-      releaseDate: movieDb.releaseDate,
+      releaseDate: movieDb.releaseDate != null ? movieDb.releaseDate! : DateTime.now(),
       title: movieDb.title,
       video: movieDb.video,
       voteAverage: movieDb.voteAverage,

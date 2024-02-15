@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MovieSlideShow extends StatelessWidget {
+
   final List<Movie> movies;
+
   const MovieSlideShow({
     super.key, 
     required this.movies
@@ -14,6 +16,7 @@ class MovieSlideShow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+
     return SizedBox(
       height: 210,
       width: double.infinity,
@@ -36,13 +39,16 @@ class MovieSlideShow extends StatelessWidget {
 }
 
 class _Slide extends StatelessWidget {
+
   final Movie movie;
+
   const _Slide({
     required this.movie
   });
 
   @override
   Widget build(BuildContext context) {
+
     final decoration = BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       boxShadow: const [
@@ -55,29 +61,21 @@ class _Slide extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 30),
+      padding: const EdgeInsets.only( bottom: 30 ),
       child: DecoratedBox(
         decoration: decoration,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.network(
-            movie.backdropPath,
-            fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress != null) {
-                return const DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.black12
-                  ));
-              }
-              return GestureDetector(
-                onTap: () => context.push('/home/0/movie/${movie.id}'),
-                child: FadeIn(child: child)
-              );
-            },
+          child: GestureDetector(
+            onTap: () => context.push('/home/0/movie/${ movie.id }'),
+            child: FadeInImage(
+              fit: BoxFit.cover,
+              placeholder: const AssetImage('assets/loaders/bottle-loader.gif'),
+              image: NetworkImage(movie.backdropPath),
+            ),
           )
         )
-        ),
+      ),
     );
   }
 }

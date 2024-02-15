@@ -5,10 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends ConsumerWidget {
+
   const CustomAppBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final color = Theme.of(context).colorScheme;
     final titleStyle = Theme.of(context).textTheme.titleMedium;
 
@@ -23,8 +25,11 @@ class CustomAppBar extends ConsumerWidget {
               Icon(Icons.movie_outlined, color: color.primary),
               const SizedBox(width: 5),
               Text('Cinemapedia', style: titleStyle),
+
               const Spacer(),
+
               IconButton(onPressed: () {
+                
                 final searchedMovies = ref.read(searchedMoviesProvider);
                 final searchQuery = ref.read(searchQueryMovieProvider);
 
