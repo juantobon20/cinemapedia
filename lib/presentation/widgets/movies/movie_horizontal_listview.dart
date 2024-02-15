@@ -100,7 +100,7 @@ class _Slide extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => context.push('/home/0/movie/${ movie.id }'),
                 child: FadeInImage(
-                  height: 220,
+                  height: 205,
                   fit: BoxFit.cover,
                   placeholder: const AssetImage('assets/loaders/bottle-loader.gif'), 
                   image: NetworkImage(movie.posterPath)
