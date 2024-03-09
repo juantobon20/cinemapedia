@@ -1,5 +1,6 @@
 import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../widgets/widgets.dart';
@@ -34,7 +35,7 @@ class HomeViewState extends ConsumerState<HomeView> with AutomaticKeepAliveClien
       return const FullScreenLoader();
     }
 
-
+    //FlutterNativeSplash.remove();
     final moviesSlideShow = ref.watch(moviesSlideShowProvider);
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
