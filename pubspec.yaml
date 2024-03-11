@@ -1,7 +1,7 @@
 name: cinemapedia
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.1.0
+version: 0.1.1+2
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
@@ -18,8 +18,8 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   go_router: ^13.0.1
   intl: ^0.19.0
-  isar: ^3.0.5
-  isar_flutter_libs: ^3.0.5
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
   path_provider: ^2.1.2
   youtube_player_flutter: ^8.1.2
 
@@ -30,7 +30,7 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
-  isar_generator: ^3.0.5
+  isar_generator: ^3.1.0+1
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -51,7 +51,7 @@ flutter_launcher_icons:
     image_path: "assets/icons/app-icon-2.png"
 
 flutter_native_splash:
-  color : "#252829"
+  color: "#252829"
   android_12:
     color: "#252829"
 

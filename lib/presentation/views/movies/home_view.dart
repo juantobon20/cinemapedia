@@ -35,7 +35,7 @@ class HomeViewState extends ConsumerState<HomeView> with AutomaticKeepAliveClien
       return const FullScreenLoader();
     }
 
-    //FlutterNativeSplash.remove();
+    FlutterNativeSplash.remove();
     final moviesSlideShow = ref.watch(moviesSlideShowProvider);
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
